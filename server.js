@@ -1,6 +1,6 @@
 const express = require("express");
 const dotenv = require("dotenv");
-const routes = require("./app/routes/indexOpenAI");
+const routes = require("./app/routes/indexAPIs");
 
 dotenv.config(); // load entorn variables
 
