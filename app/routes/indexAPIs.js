@@ -13,6 +13,6 @@ router.get("/", async (req, res) => {
 });
 
 // Route for chatting (calls the controller)
-router.post("/chat", chatController.chatWithOpenAIChatGPT);
+router.post("/chat", chatController.chatWithBoth);
 
 module.exports = router;
