@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const chatController = require("../controllers/chatController"); // Import controller
+const comparisonController = require("../controllers/comparisonController"); // Import controller
 
 // Root
 router.get("/", async (req, res) => {
@@ -14,5 +15,6 @@ router.get("/", async (req, res) => {
 
 // Route for chatting (calls the controller)
 router.post("/chat", chatController.chatWithBoth);
-
+// Route for comparison (calls the controller)
+router.post("/comparison", comparisonController.compareModels);
 module.exports = router;

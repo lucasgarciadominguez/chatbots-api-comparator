@@ -13,20 +13,6 @@ const openai = new OpenAI({
   apiKey: process.env.OPENROUTER_API_KEY, // key for the api openai
 });
 
-// endpoint for writing haikus
-router.get("/haiku", async (req, res) => {
-  try {
-    const completion = await openai.chat.completions.create({
-      model: "deepseek-chat",
-      messages: [{ role: "system", content: "Write a haiku about AI" }],
-    });
-
-    res.json({ response: completion.choices[0].message.content });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
 async function getDeepseekResponse(userMessage) {
   try {
     const completion = await openai.chat.completions.create({
