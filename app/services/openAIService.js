@@ -13,11 +13,17 @@ const openai = new OpenAI({
 });
 
 // function for chatting service
-async function getChatGptResponse(userMessage) {
+async function getChatGptResponse(history, userMessage) {
   try {
+    const messages = history.map((msg) => ({
+      role: msg.role,
+      content: msg.message,
+    }));
+    messages.push({ role: "user", content: userMessage });
+
     const completion = await openai.chat.completions.create({
       model: "gpt-4o-mini",
-      messages: [{ role: "user", content: userMessage }],
+      messages,
     });
 
     return completion.choices[0].message.content;

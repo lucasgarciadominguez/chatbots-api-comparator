@@ -1,21 +1,27 @@
 const openAIService = require("../services/openAIService");
 const deepseekService = require("../services/deepseekService");
+const chatService = require("../services/chatService");
 
 // Method that calls only ChatGPT
 async function chatWithOpenAIChatGPT(req, res) {
   try {
     console.log("Body received:", req.body);
+    const { chatId, userMessage } = req.body;
 
-    const userMessage = req.body.message;
-    if (!userMessage) {
-      return res.status(400).json({ error: "Message is required" });
+    if (!chatId || !userMessage) {
+      return res.status(400).json({ error: "chatId and message are required" });
     }
+    const history = chatService.getChatHistory(chatId);
 
-    const responseGPT = await openAIService.getChatGptResponse(userMessage);
+    const responseGPT = await openAIService.getChatGptResponse(
+      history,
+      userMessage
+    );
+    chatService.addMessageToChat(chatId, "user", userMessage);
     res.json({ response: responseGPT });
   } catch (error) {
     console.error("Error in the controller:", error);
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ error: error.userMessage });
   }
 }
 
@@ -66,4 +72,4 @@ async function chatWithBoth(req, res) {
   }
 }
 
-module.exports = { chatWithBoth };
+module.exports = { chatWithBoth, chatWithOpenAIChatGPT };

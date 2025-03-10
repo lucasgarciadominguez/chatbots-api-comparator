@@ -14,7 +14,7 @@ router.get("/", async (req, res) => {
 });
 
 // Route for chatting (calls the controller)
-router.post("/chat", chatController.chatWithBoth);
+router.post("/chat", chatController.chatWithOpenAIChatGPT);
 // Route for comparison (calls the controller)
 router.post("/comparison", comparisonController.compareModels);
 module.exports = router;
