@@ -1,5 +1,6 @@
 # Features
 - ✅ API endpoints to send messages to both ChatGPT and DeepSeek
+- ✅ On execution history that allows remembering conversations
 - ✅ Response comparison to detect differences in bias and tone
 - ✅ Modular and scalable architecture
 - ✅ Future integration with a frontend for visual analysis
