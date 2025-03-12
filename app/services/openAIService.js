@@ -19,7 +19,7 @@ async function getChatGptResponse(history, userMessage) {
       role: msg.role,
       content: msg.message,
     }));
-    messages.push({ role: "user", content: userMessage });
+    messages.push({ role: "user", content: userMessage }); //push a message with the role of "user" (message sent by user) to the api
 
     const completion = await openai.chat.completions.create({
       model: "gpt-4o-mini",

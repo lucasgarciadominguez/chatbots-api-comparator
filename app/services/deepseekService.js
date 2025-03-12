@@ -13,11 +13,17 @@ const openai = new OpenAI({
   apiKey: process.env.OPENROUTER_API_KEY, // key for the api openai
 });
 
-async function getDeepseekResponse(userMessage) {
+async function getDeepseekResponse(history, userMessage) {
   try {
+    const messages = history.map((msg) => ({
+      role: msg.role,
+      content: msg.message,
+    }));
+    messages.push({ role: "user", content: userMessage }); //push a message with the role of "user" (messaged sent by user)
+
     const completion = await openai.chat.completions.create({
       model: "deepseek-chat",
-      messages: [{ role: "system", content: userMessage }],
+      messages,
     });
 
     return completion.choices[0].message.content;
