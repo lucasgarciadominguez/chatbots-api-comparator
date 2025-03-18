@@ -1,15 +1,36 @@
-const chats = {}; // on execution memory chats array
+const Chat = require("../model/Chat");
 
-// obtains the chat history demanded
-function getChatHistory(chatId) {
-  return chats[chatId] || []; // if not, empty array
-}
+// obtains the chat history demanded from mongoDB
+async function getChatHistory(chatId) {
+  try {
+    let chat = await Chat.findOne({ chatId });
 
-// Aggregates a message to the history
-function addMessageToChat(chatId, role, message) {
-  if (!chats[chatId]) {
-    chats[chatId] = []; // if not, creates a new history
+    if (!chat) {
+      chat = new Chat({ chatId, history: [] });
+      await chat.save();
+    }
+
+    return chat.history;
+  } catch (error) {
+    console.error("Error obtaining history from the chat:", error);
+    return [];
   }
-  chats[chatId].push({ role, message });
 }
+
+// Aggregates a message to the history chat in MongoDB
+async function addMessageToChat(chatId, role, message) {
+  try {
+    let chat = await Chat.findOne({ chatId });
+
+    if (!chat) {
+      chat = new Chat({ chatId, history: [] });
+    }
+
+    chat.history.push({ role, message });
+    await chat.save();
+  } catch (error) {
+    console.error("Error aggregating message to the chat:", error);
+  }
+}
+
 module.exports = { getChatHistory, addMessageToChat };

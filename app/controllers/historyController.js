@@ -3,8 +3,12 @@ const chatService = require("../services/chatService");
 async function getChatHistory(req, res) {
   //gets the chat history
   try {
-    const chatId = req.params.chatId;
-    const history = chatService.getChatHistory(chatId);
+    const { chatId } = req.params;
+    if (!chatId) {
+      return res.status(400).json({ error: "chatId is required" });
+    }
+
+    const history = await chatService.getChatHistory(chatId);
     res.json({ chatId, history });
   } catch (error) {
     console.error("Error fetching chat history:", error);

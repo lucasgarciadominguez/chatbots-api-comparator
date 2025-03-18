@@ -1,6 +1,7 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const routes = require("./app/routes/indexAPIs");
+require("./app/config/db-config"); // Connect to MongoDB
 
 dotenv.config(); // load entorn variables
 
