@@ -1,6 +1,7 @@
 const OpenAI = require("openai");
 const dotenv = require("dotenv");
 const path = require("path");
+const timerService = require("../services/timerService");
 
 dotenv.config({
   path: path.resolve(process.cwd(), ".env"), // adjust for env variables
@@ -13,8 +14,10 @@ const openai = new OpenAI({
 });
 
 // function for chatting service
-async function getChatGptResponse(history, userMessage) {
+async function getChatGptResponse(history, userMessage, responseTimes) {
   try {
+    const start = Date.now(); // Saves the moment where it starts
+
     const messages = history.map((msg) => ({
       role: msg.role,
       content: msg.message,
@@ -25,6 +28,7 @@ async function getChatGptResponse(history, userMessage) {
       model: "gpt-4o-mini",
       messages,
     });
+    responseTimes.deepseek = timerService.calculateTime(start);
 
     return completion.choices[0].message.content;
   } catch (error) {

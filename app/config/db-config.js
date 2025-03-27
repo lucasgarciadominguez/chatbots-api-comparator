@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const MONGO_URI = process.env.MONGO_URI || "mongodb://localhost:27017/";
+const MONGO_URI = process.env.MONGO_URI;
 
 mongoose.connect(MONGO_URI, {
   useNewUrlParser: true,
@@ -37,6 +37,3 @@ process.once("SIGUSR2", () => {
     process.kill(process.pid, "SIGUSR2");
   });
 });
-
-process.on("SIGINT", () => {
-  gracefulShutdown("application termination", () =

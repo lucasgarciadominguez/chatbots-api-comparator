@@ -4,6 +4,7 @@ const router = express.Router();
 const chatController = require("../controllers/chatController"); // Imports controllers
 const comparisonController = require("../controllers/comparisonController");
 const historyController = require("../controllers/historyController");
+const newChatController = require("../controllers/newChatController");
 
 // Root
 router.get("/", async (req, res) => {
@@ -15,10 +16,7 @@ router.get("/", async (req, res) => {
 });
 
 // Route for creating a new chat
-router.post("/new-chat", (req, res) => {
-  const chatId = Date.now().toString(); // generates an unique chatid
-  res.json({ chatId });
-});
+router.post("/new-chat", newChatController.createNewChat);
 
 // Route for obtaining th chatHistory with a chatid
 router.get("/chat/:chatId", historyController.getChatHistory);
