@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const ChatSchema = new mongoose.Schema({
-  chatId: { type: String, required: true, unique: true, index: true },
+  chatId: { type: String, required: true, unique: true, index: true }, //uses indexes for fast searches
   history: [
     {
       role: { type: String, enum: ["user", "assistant"], required: true },

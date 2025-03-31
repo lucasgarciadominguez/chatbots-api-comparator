@@ -28,7 +28,7 @@ async function getChatGptResponse(history, userMessage, responseTimes) {
       model: "gpt-4o-mini",
       messages,
     });
-    responseTimes.deepseek = timerService.calculateTime(start);
+    responseTimes.chatgpt = timerService.calculateTime(start);
 
     return completion.choices[0].message.content;
   } catch (error) {

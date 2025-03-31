@@ -1,7 +1,7 @@
 const chatService = require("../services/chatService");
 
 // Controller function to create a new chat
-async function createNewChat(res) {
+async function createNewChat(req, res) {
   try {
     const chatId = await chatService.getChatID();
     res.json({ chatId });
