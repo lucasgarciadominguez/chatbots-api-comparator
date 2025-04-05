@@ -1,21 +1,28 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
-
-const users = []; // simulation of database
+const User = require("../model/User");
 
 async function register(req, res) {
   try {
     const { username, password } = req.body;
 
+    // Check if user already exists
+    const existingUser = await User.findOne({ username });
+    if (existingUser) {
+      return res.status(400).json({ error: "User already exists" });
+    }
+
     // Encripts the password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    // saves the user
-    users.push({ username, password: hashedPassword });
+    // saves the user to the DB
+    const newUser = new User({ username, password: hashedPassword });
+    await newUser.save();
 
     res.json({ message: "User registered successfully" });
   } catch (error) {
+    console.error("Error in register:", error);
     res.status(500).json({ error: "Internal server error" });
   }
 }
@@ -24,8 +31,8 @@ async function login(req, res) {
   try {
     const { username, password } = req.body;
 
-    // finds user
-    const user = users.find((u) => u.username === username);
+    // finds user in MongoDB
+    const user = await User.findOne({ username });
     if (!user) return res.status(400).json({ error: "User not found" });
 
     // check passwords
