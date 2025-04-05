@@ -1,9 +1,10 @@
 # Features
-- ✅ API endpoints to send messages to both ChatGPT and DeepSeek
-- ✅ Database integration for query history
-- ✅ Response comparison to detect differences in bias and tone
-- ✅ Modular and scalable architecture:
-- ✅ Future integration with a frontend for visual analysis
+- ✅ API endpoints to send messages to both **ChatGPT** and **DeepSeek**
+- ✅ Secure **user registration and login** with JWT-based authentication
+- ✅ **MongoDB integration** to persist chat history and user data
+- ✅ **Response comparison** to detect differences in bias and tone
+- ✅ Clean, **modular architecture** designed for scalability and maintainability
+- ✅ Ready for future **frontend integration** to enable visual comparison and interaction
 
 # Tech Stack
 - Backend: Node.js, Express
